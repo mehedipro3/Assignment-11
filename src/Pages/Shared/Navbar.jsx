@@ -5,9 +5,9 @@ const Navbar = () => {
 
   const links = <>
     <li><NavLink to={"/"}>Home</NavLink></li>
-    <li><NavLink to={"/"}>All Books</NavLink></li>
-    <li><NavLink to={"/"}>Add Book</NavLink></li>
-    <li><NavLink to={"/"}>Borrowed Books</NavLink></li>
+    <li><NavLink to={"/allBooks"}>All Books</NavLink></li>
+    <li><NavLink to={"/addBooks"}>Add Book</NavLink></li>
+    <li><NavLink to={"/borrowedBooks"}>Borrowed Books</NavLink></li>
     </>
   return (
     <div className="navbar bg-base-100 bg-gradient-to-br from-indigo-800 to-sky-300 text-white ">
