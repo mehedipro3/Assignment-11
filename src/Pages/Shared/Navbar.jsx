@@ -1,14 +1,34 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-
+import AuthContext from '../../Context/AuthContext/AuthContext';
+import logo from '../../assets/library-icon.png'
 const Navbar = () => {
 
+  const { user, signOutUser } = useContext(AuthContext);
   const links = <>
-    <li><NavLink to={"/"}>Home</NavLink></li>
-    <li><NavLink to={"/allBooks"}>All Books</NavLink></li>
-    <li><NavLink to={"/addBooks"}>Add Book</NavLink></li>
-    <li><NavLink to={"/borrowedBooks"}>Borrowed Books</NavLink></li>
+    <li><NavLink to={"/"} style={({ isActive }) => {
+      return isActive ? { color: "black", background: "white" } : {};
+    }}>Home</NavLink></li>
+    <li><NavLink to={"/allBooks"} style={({ isActive }) => {
+      return isActive ? { color: "black", background: "white" } : {};
+    }}>All Books</NavLink></li>
+    <li><NavLink to={"/addBooks"} style={({ isActive }) => {
+      return isActive ? { color: "black", background: "white" } : {};
+    }}>Add Book</NavLink></li>
+    <li><NavLink to={"/borrowedBooks"} style={({ isActive }) => {
+      return isActive ? { color: "black", background: "white" } : {};
+    }}>Borrowed Books</NavLink></li>
   </>
+
+  const handleSingOut = () => {
+    signOutUser()
+      .then(result => {
+        console.log(result.user);
+      })
+      .catch((error) => {
+        console.log(error.massage);
+      });
+  }
   return (
     <div className="navbar bg-base-100 bg-gradient-to-br from-indigo-800 to-sky-300 text-white ">
       <div className="navbar-start">
@@ -22,7 +42,9 @@ const Navbar = () => {
             {links}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">KnowledgeCore</a>
+        <a className="btn btn-ghost text-xl">
+          <img className='w-10' src={logo} alt="" />
+          KnowledgeCore</a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
@@ -31,25 +53,20 @@ const Navbar = () => {
       </div>
       <div className="navbar-end gap-2">
 
-        <Link to={"/register"}>
-        <button className="btn">Register</button>
-        </Link>
-        <Link to={"/singIn"}>
-          <button className="btn">Sing in</button>
-        </Link>
-        {/* {
-          user ? <>
-              <button onClick={handleSingOut}  className="btn">Sing out</button>
-          </> 
-          :
-          <>
-            <Link to={"/register"}>Register</Link>
-            <Link to={"/singIn"}>
-              <button className="btn">Sing in</button>
-            </Link>
 
+        {
+          user ? <>
+            <button onClick={handleSingOut} className="btn">Sing out</button>
           </>
-        } */}
+            :
+            <>
+              <Link to={"/register"}>Register</Link>
+              <Link to={"/singIn"}>
+                <button className="btn">Sing in</button>
+              </Link>
+
+            </>
+        }
       </div>
     </div>
   );
