@@ -11,6 +11,8 @@ import Register from "../Pages/Register/Register";
 import SingIn from "../Pages/SingIn/SingIn";
 import PrivateRouter from "./PrivateRouter";
 import ErrorPage from "../Pages/Shared/ErrorPage";
+import DetailsBook from "../Pages/DetailsBooks/DetailsBooks";
+import UpdateBooks from "../Pages/UpdateBooks/UpdateBooks";
 
 const router = createBrowserRouter([
   {
@@ -32,8 +34,18 @@ const router = createBrowserRouter([
       loader: () => fetch('http://localhost:3000/books')
     },
     {
+      path : `/updateBooks/:id`,
+      element : <PrivateRouter><UpdateBooks></UpdateBooks></PrivateRouter>,
+      loader: ({params}) => fetch(`http://localhost:3000/books/${params.id}`)
+    },
+    {
       path : "/borrowedBooks",
       element : <BorrowedBooks></BorrowedBooks>,
+    },
+    {
+      path:'/details/:id',
+      element:<PrivateRouter><DetailsBook></DetailsBook></PrivateRouter>,
+      loader: ({params}) => fetch(`http://localhost:3000/books/${params.id}`)
     },
     {
       path : "/category/:categoryName",

@@ -1,7 +1,8 @@
 
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import StarRatings from "react-star-ratings";
+
 
 
 export default function CategoryPage() {
@@ -41,18 +42,20 @@ export default function CategoryPage() {
               <p className="text-xl">Category: {book.category}</p>
               <p className="text-xl">Quantity: {book.quantity}</p>
               <div className="flex gap-1.5">
-              <p className="text-xl ">Rating: </p>
-              <StarRatings
-                rating={Number(book.rating)}
-                starRatedColor="red"
-                numberOfStars={5}
-                starDimension="20px"
-                starSpacing="2px"
-              />
+                <p className="text-xl ">Rating: </p>
+                <StarRatings
+                  rating={Number(book.rating)}
+                  starRatedColor="red"
+                  numberOfStars={5}
+                  starDimension="20px"
+                  starSpacing="2px"
+                />
               </div>
-              <button className="mt-3 px-4 py-2 bg-sky-300 text-white rounded hover:bg-indigo-800">
-                Details
-              </button>
+              <Link to={`/details/${book._id}`}>
+                <button className="mt-3 px-4 py-2 bg-sky-300 text-white rounded hover:bg-indigo-800">
+                  Details
+                </button>
+              </Link>
             </div>
           </div>
         ))}

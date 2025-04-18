@@ -2,7 +2,7 @@
 
 export default function TrustedBy() {
   const partners = [
-    { name: "Oxford International School", logo: "https://ois.edu.bd/wp-content/uploads/2021/05/Oxford-International-School.webp" },
+    { name: "Oxford International School", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_kn-lQWfNSkCD4D_oFZT2NnuXSdMNojnuGw&s" },
     { name: "Scholars Academy", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_A1vDnOPadmtDbJetVY4Wm5BCBeiTKcd0rQ&s" },
     { name: "Dhaka Public School", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPg3LONwZZVvH0sVFEcohYVVUlOYqeoftbJg&s" },
     { name: "Dhaka Public School", logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2gSyr1w0M6cGEVht1cPXOajuYmk8mf5HTBA&s" },
