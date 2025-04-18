@@ -2,6 +2,7 @@
 import { IoMdStarOutline } from 'react-icons/io';
 
 import { Link } from 'react-router-dom';
+import StarRatings from 'react-star-ratings';
 //import ReactStars from "react-rating-stars-component";
 
 const BookCard = ({ book }) => {
@@ -20,7 +21,13 @@ const BookCard = ({ book }) => {
           <p className="">Author Name : {book.author}</p>
           <p className="">Category : {book.category}</p>
           <p className="">Quantity : {book.quantity}</p>
-          {/* <p className="flex  items-center text-sm sm:text-2xl">Rating :  <ReactStars count={5} value={book.rating} size={30}></ReactStars> </p>               */}
+          <p className="flex items-center text-xl ">Rating :  <StarRatings
+            rating={Number(book.rating)}
+            starRatedColor="red"
+            numberOfStars={5}
+            starDimension="20px"
+            starSpacing="2px"
+          /> </p>
         </div>
         <div className='my-3 flex justify-center'>
           <Link className="btn btn-accent hover:bg-sky-400 hover:border-none scale-110 duration-300 hover:scale-125  hover:text-white" >Update Book</Link>

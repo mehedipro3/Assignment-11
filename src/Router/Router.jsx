@@ -9,12 +9,14 @@ import BorrowedBooks from "../Pages/BorrowedBooks/BorrowedBooks";
 import CategoryPage from "../Pages/CategoryPage/CategoryPage";
 import Register from "../Pages/Register/Register";
 import SingIn from "../Pages/SingIn/SingIn";
+import PrivateRouter from "./PrivateRouter";
+import ErrorPage from "../Pages/Shared/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout></MainLayout>,
-    errorElement : <h2>Router Not Found</h2>,
+    errorElement : <ErrorPage></ErrorPage>,
     children: [
       {
         path: "/",
@@ -26,7 +28,7 @@ const router = createBrowserRouter([
     },
     {
       path : "/allBooks",
-      element : <AllBooks></AllBooks>,
+      element : <PrivateRouter><AllBooks></AllBooks></PrivateRouter>,
       loader: () => fetch('http://localhost:3000/books')
     },
     {
