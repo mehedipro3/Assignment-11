@@ -9,8 +9,8 @@ const BookCard = ({ book }) => {
   // console.log(book)
 
   return (
-    <div className=" bg-[#bbdefb] bg-opacity-80 border-2 border-[#64b5f6] 
-         w-[90%] sm:w-[400px] md:w-[90%]   rounded-xl">
+    <div className=" bg-gray-100 bg-opacity-80 border-2 border-[#64b5f6] 
+         w-[90%] sm:w-[400px] md:w-[90%] rounded-xl">
       <div className="flex-col shrink-0">
         <img src={book.image} className="w-[300px] rounded-lg shadow-2xl scale-75 mx-auto pt-5" />
         <div className='px-4 flex flex-col gap-2 text-xl font-semibold '>

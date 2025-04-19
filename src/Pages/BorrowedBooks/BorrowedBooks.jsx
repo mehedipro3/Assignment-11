@@ -4,23 +4,24 @@ import { toast } from 'react-toastify';
 import Lottie from 'lottie-react';
 import Nodata from '../../assets/Nodata.json';
 import AuthContext from '../../Context/AuthContext/AuthContext';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const BorrowedBooks = () => {
 
   const [borrowedBooks, setBorrowedBooks] = useState([]);
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
 
 
   useEffect(() => {
 
     fetch(`http://localhost:3000/bookBorrowed?email=${user.email}`)
-        .then(res => res.json())
-        .then(data => {
-            console.log(data)
-            setBorrowedBooks(data)
-        })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+        setBorrowedBooks(data)
+      })
 
     // axios.get(`http://localhost:3000/bookBorrowed?email=${user.email}`, {withCredentials: true})
     // .then(res => {
@@ -39,7 +40,7 @@ const BorrowedBooks = () => {
   // console.log(user.email)
 
   const handleReturn = (borrowBoookId, bookId) => {
-    console.log(borrowBoookId, bookId)
+    console.log(borrowBoookId);
     console.log("Book ID:", bookId);
 
     Swal.fire({
@@ -53,10 +54,15 @@ const BorrowedBooks = () => {
     }).then(result => {
       if (result.isConfirmed) {
         fetch(`http://localhost:3000/bookBorrowed/${borrowBoookId}`, {
-          method: "DELETE"
+          method: "DELETE",
+          headers: {
+            "content-type": "application/json"
+          },
+          body: JSON.stringify({ id: borrowBoookId }),
         })
           .then(res => res.json())
           .then(data => {
+            navigate('/');
             if (data.message) {
               Swal.fire('Returned!', 'The book has been returned.', 'success');
             }
@@ -72,7 +78,7 @@ const BorrowedBooks = () => {
               .then(data => {
 
                 console.log(data)
-
+                
                 if (data.modifiedCount == 1) {
                   toast.success('Book Return Done')
                   toast.success('Thanks for Book Return')
@@ -80,6 +86,8 @@ const BorrowedBooks = () => {
 
                 const remainingBook = borrowedBooks.filter(borrowedBook => borrowedBook._id !== borrowBoookId);
                 setBorrowedBooks(remainingBook);
+
+
               })
           })
           .catch((err) => console.log(err))
@@ -88,28 +96,47 @@ const BorrowedBooks = () => {
   }
 
   return (
-    <div className='grid lg:grid-cols-2  2xl:grid-cols-3 gap-10 justify-center items-center py-16 '>
-      {
-        borrowedBooks.map(borrowedBook =>
-          <div className='flex justify-center items-center bg-[#bbdefb] p-5 rounded-xl sm:w-[500px] lg:scale-90 mx-auto' key={borrowedBook._id}>
-            <div className='sm:flex justify-between items-center sm:gap-3'>
-              <div className='flex justify-center items-center'>
-                <img className='h-40' src={borrowedBook.bookImage} alt="" />
+    <section className="py-16 px-4 bg-gradient-to-br from-blue-50 to-green-50">
+      <div className="grid lg:grid-cols-2 2xl:grid-cols-3 gap-10 justify-center items-start">
+        {
+          borrowedBooks.map(borrowedBook => (
+            <div
+              key={borrowedBook._id}
+              className="bg-white shadow-lg rounded-2xl p-6 transition-transform hover:scale-[1.02] hover:shadow-xl border border-blue-200 w-full max-w-md mx-auto"
+            >
+              <div className="flex flex-col sm:flex-row gap-6 items-center">
+                {/* Book Image */}
+                <img
+                  src={borrowedBook.bookImage}
+                  alt={borrowedBook.bookName}
+                  className="h-36 w-28 object-cover rounded-md shadow-md"
+                />
+
+                {/* Book Info */}
+                <div className="flex-1 text-sm font-medium text-gray-700 space-y-2">
+                  <p><span className="font-semibold text-sky-700">Book Name:</span> {borrowedBook.bookName}</p>
+                  <p><span className="font-semibold text-sky-700">Category:</span> {borrowedBook.bookCategory}</p>
+                  <p><span className="font-semibold text-sky-700">Borrowed:</span> {borrowedBook.borrowDate}</p>
+                  <p><span className="font-semibold text-sky-700">Return by:</span> {borrowedBook.returnDate}</p>
+                </div>
               </div>
-              <div className='text-sm font-medium mt-4'>
-                <p>Book Name : {borrowedBook.bookName}</p>
-                <p>Category : {borrowedBook.bookCategory}</p>
-                <p>Borrowed Date : {borrowedBook.borrowDate}</p>
-                <p>Return Date : {borrowedBook.returnDate}</p>
-              </div>
-              <div className='flex justify-center mt-4'>
-                <button onClick={() => handleReturn(borrowedBook._id, borrowedBook.bookId)} className='btn border-none bg-green-400 hover:bg-[#90caf9] hover:border-none scale-95 duration-300 hover:scale-90 sm:text-base hover:text-white shadow-md'>Return Book</button>
+
+              {/* Return Button */}
+              <div className="mt-6 flex justify-end">
+                <button
+                  onClick={() => handleReturn(borrowedBook._id, borrowedBook.bookId)}
+                  className="btn bg-sky-300 hover:bg-indigo-800 text-white font-semibold rounded-md px-5 py-2 transition-all duration-300 hover:shadow-md hover:scale-105"
+                >
+                  Return Book
+                </button>
               </div>
             </div>
-          </div>)
-      }
-    </div>
+          ))
+        }
+      </div>
+    </section>
   );
+
 };
 
 export default BorrowedBooks;
