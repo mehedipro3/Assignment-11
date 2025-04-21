@@ -35,7 +35,7 @@ const AddBook = () => {
 
     console.log(newBook);
 
-    fetch('http://localhost:3000/books', {
+    fetch('https://library-server-khaki.vercel.app/books', {
       method: 'POST',
       headers: {
         'content-type': 'application/json'

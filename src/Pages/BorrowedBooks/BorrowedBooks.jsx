@@ -5,6 +5,7 @@ import Lottie from 'lottie-react';
 import Nodata from '../../assets/Nodata.json';
 import AuthContext from '../../Context/AuthContext/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const BorrowedBooks = () => {
 
@@ -16,18 +17,10 @@ const BorrowedBooks = () => {
 
   useEffect(() => {
 
-    fetch(`http://localhost:3000/bookBorrowed?email=${user.email}`)
-      .then(res => res.json())
-      .then(data => {
-        console.log(data)
-        setBorrowedBooks(data)
-      })
-
-    // axios.get(`http://localhost:3000/bookBorrowed?email=${user.email}`, {withCredentials: true})
-    // .then(res => {
-    //     // console.log(res.data)
-    //     setBorrowedBooks(res.data)
-    // })
+    axios.get(`https://library-server-khaki.vercel.app/bookBorrowed?email=${user.email}`, {withCredentials: true})
+    .then(res => {
+        setBorrowedBooks(res.data)
+    })
 
   }, [user.email])
 
@@ -39,8 +32,8 @@ const BorrowedBooks = () => {
 
   // console.log(user.email)
 
-  const handleReturn = (borrowBoookId, bookId) => {
-    console.log(borrowBoookId);
+  const handleReturn = (borrowBookId, bookId) => {
+    console.log(borrowBookId);
     console.log("Book ID:", bookId);
 
     Swal.fire({
@@ -53,12 +46,12 @@ const BorrowedBooks = () => {
       confirmButtonText: "Yes, Return it!"
     }).then(result => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:3000/bookBorrowed/${borrowBoookId}`, {
+        fetch(`https://library-server-khaki.vercel.app/bookBorrowed/${borrowBookId}`, {
           method: "DELETE",
           headers: {
             "content-type": "application/json"
           },
-          body: JSON.stringify({ id: borrowBoookId }),
+          body: JSON.stringify({ id: borrowBookId }),
         })
           .then(res => res.json())
           .then(data => {
@@ -66,8 +59,7 @@ const BorrowedBooks = () => {
             if (data.message) {
               Swal.fire('Returned!', 'The book has been returned.', 'success');
             }
-            // const bookIds = bookId;
-            fetch(`http://localhost:3000/books/${bookId}`, {
+            fetch(`https://library-server-khaki.vercel.app/books/${bookId}`, {
               method: "PATCH",
               headers: {
                 "content-type": "application/json"
@@ -78,13 +70,13 @@ const BorrowedBooks = () => {
               .then(data => {
 
                 console.log(data)
-                
+
                 if (data.modifiedCount == 1) {
                   toast.success('Book Return Done')
                   toast.success('Thanks for Book Return')
                 }
 
-                const remainingBook = borrowedBooks.filter(borrowedBook => borrowedBook._id !== borrowBoookId);
+                const remainingBook = borrowedBooks.filter(borrowedBook => borrowedBook._id !== borrowBookId);
                 setBorrowedBooks(remainingBook);
 
 

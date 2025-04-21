@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import AuthContext from './AuthContext';
 import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import { auth } from '../../Firebase/firebase.init';
+import axios from 'axios';
+
 
 
 const googleProvider = new GoogleAuthProvider();
@@ -33,8 +35,31 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, currentUser => {
       setUser(currentUser);
-      console.log('state captured', currentUser);
-      setLoading(false);
+      console.log('state captured : ', currentUser?.email);
+
+
+      if(currentUser?.email) {
+        const user = { email : currentUser.email};
+
+        axios.post('https://library-server-khaki.vercel.app/jwt', user, {
+          withCredentials: true,
+        })
+        .then(res => {
+          console.log('JWT response:', res.data);
+          setLoading(false);
+        })
+        .catch(err => console.error('JWT fetch error:', err));
+      }
+      else{
+        axios.post('https://library-server-khaki.vercel.app/logout',{},{
+          withCredentials: true,
+        })
+        .then(res =>{
+          console.log('Logout response:', res.data);
+          setLoading(false);
+        })
+      }
+     
     })
     return () => {
       unsubscribe();

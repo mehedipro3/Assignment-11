@@ -1,16 +1,15 @@
 import React, { useContext } from 'react';
 import SingInLottieData from '../../assets/Login.json'
 import Lottie from 'lottie-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AuthContext from '../../Context/AuthContext/AuthContext';
 import { toast } from 'react-toastify';
 
 
 
-
-
 const SingIn = () => {
   const { signInUser, signinWithGoogle } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -21,8 +20,9 @@ const SingIn = () => {
 
     signInUser(email, password)
       .then(res => {
-        console.log(res.user);
+        console.log(res);
         toast.success('Login Successfully Done')
+        navigate('/');
       })
       .catch(error => {
         toast.error("Unable to login")
@@ -35,6 +35,7 @@ const SingIn = () => {
       .then(res => {
         console.log(res.user);
         toast.success('Login Successfully Done')
+        navigate('/');
       })
       .catch(error => {
         toast.error('Unable to Login')

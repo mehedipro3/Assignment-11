@@ -25,7 +25,7 @@ const DetailsBook = () => {
       bookCategory: book.category,
     };
 
-    fetch(`http://localhost:3000/borrow/${book._id}`, {
+    fetch(`https://library-server-khaki.vercel.app/borrow/${book._id}`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(borrowBookDetails),

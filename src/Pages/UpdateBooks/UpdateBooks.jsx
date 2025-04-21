@@ -22,7 +22,7 @@ const UpdateBooks = () => {
       description: form.get('description'),
     };
 
-    fetch(`http://localhost:3000/books/${book._id}`, {
+    fetch(`https://library-server-khaki.vercel.app/books/${book._id}`, {
       method: 'PUT',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(updatedBook),

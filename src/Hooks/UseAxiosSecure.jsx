@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import AuthContext from "../Context/AuthContext/AuthContext";
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: 'https://library-server-khaki.vercel.app',
   withCredentials: true,
 });
 

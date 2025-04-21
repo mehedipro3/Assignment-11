@@ -27,9 +27,8 @@ export default function BookCategories() {
         <h2 className="text-3xl font-bold mb-6">Book Categories</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
           {categories.map((category,idx) => (
-            <Link to={`/category/${category.name}`}>
+            <Link  key={idx} to={`/category/${category.name}`}>
             <div
-              key={idx}
               className="bg-white rounded-lg shadow-md hover:shadow-xl cursor-pointer transition"
             >
               <img

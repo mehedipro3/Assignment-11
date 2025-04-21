@@ -1,6 +1,6 @@
 import Lottie from 'lottie-react';
 import registerLottieData from '../../assets/Register.json';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import AuthContext from '../../Context/AuthContext/AuthContext';
 import { toast } from 'react-toastify';
@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 const Register = () => {
 
   const { createUser, setUser, signinWithGoogle } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleRegister = e => {
     e.preventDefault();
@@ -22,6 +23,7 @@ const Register = () => {
     createUser(email, password)
       .then(result => {
         console.log(result.user)
+        navigate('/');
       })
       .catch(error => {
         console.log(error.massage);
@@ -33,6 +35,7 @@ const Register = () => {
       .then(res => {
         setUser(res.user)
         toast.success("Register Successfully Done")
+        navigate('/');
       })
       .catch(error => {
         toast.error('Unable To Register')

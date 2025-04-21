@@ -18,48 +18,48 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout></MainLayout>,
-    errorElement : <ErrorPage></ErrorPage>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "/",
         element: <Home></Home>,
-    },
-    {
-      path : "/addBooks",
-      element : <AddBooks></AddBooks>,
-    },
-    {
-      path : "/allBooks",
-      element : <PrivateRouter><AllBooks></AllBooks></PrivateRouter>,
-      loader: () => fetch('http://localhost:3000/books')
-    },
-    {
-      path : `/updateBooks/:id`,
-      element : <PrivateRouter><UpdateBooks></UpdateBooks></PrivateRouter>,
-      loader: ({params}) => fetch(`http://localhost:3000/books/${params.id}`)
-    },
-    {
-      path : "/borrowedBooks",
-      element : <BorrowedBooks></BorrowedBooks>,
-    },
-    {
-      path:'/details/:id',
-      element:<PrivateRouter><DetailsBook></DetailsBook></PrivateRouter>,
-      loader: ({params}) => fetch(`http://localhost:3000/books/${params.id}`)
-    },
-    {
-      path : "/category/:categoryName",
-      element : <CategoryPage></CategoryPage>,
-      loader : ({params}) => fetch(`http://localhost:3000/books?category=${params.categoryName}`)
-    },
-    {
-      path : "/register",
-      element : <Register></Register>,
-    },
-    {
-      path : "/singIn",
-      element : <SingIn></SingIn> ,
-    },
+      },
+      {
+        path: "/addBooks",
+        element: <PrivateRouter><AddBooks></AddBooks></PrivateRouter>,
+      },
+      {
+        path: "/allBooks",
+        element: <PrivateRouter><AllBooks></AllBooks></PrivateRouter>,
+        loader: () => fetch('https://library-server-khaki.vercel.app/books')
+      },
+      {
+        path: `/updateBooks/:id`,
+        element: <PrivateRouter><UpdateBooks></UpdateBooks></PrivateRouter>,
+        loader: ({ params }) => fetch(`https://library-server-khaki.vercel.app/books/${params.id}`)
+      },
+      {
+        path: "/borrowedBooks",
+        element: <PrivateRouter><BorrowedBooks></BorrowedBooks></PrivateRouter>,
+      },
+      {
+        path: '/details/:id',
+        element: <PrivateRouter><DetailsBook></DetailsBook></PrivateRouter>,
+        loader: ({ params }) => fetch(`https://library-server-khaki.vercel.app/books/${params.id}`)
+      },
+      {
+        path: "/category/:categoryName",
+        element: <CategoryPage></CategoryPage>,
+        loader: ({ params }) => fetch(`https://library-server-khaki.vercel.app/books?category=${params.categoryName}`)
+      },
+      {
+        path: "/register",
+        element: <Register></Register>,
+      },
+      {
+        path: "/singIn",
+        element: <SingIn></SingIn>,
+      },
     ]
   },
 ]);

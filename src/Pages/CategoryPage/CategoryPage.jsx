@@ -12,7 +12,7 @@ export default function CategoryPage() {
   console.log(categoryName);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/books?category=${categoryName}`)
+    fetch(`https://library-server-khaki.vercel.app/books?category=${categoryName}`)
       .then(res => res.json())
       .then((data) => {
         setBooks(data)
